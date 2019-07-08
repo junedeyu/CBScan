@@ -10,6 +10,6 @@ s.source = { :git => "https://github.com/junedeyu/CBScan.git", :tag => s.version
 s.requires_arc = true
 s.platform = :ios, '9.0'
 s.ios.deployment_target = '9.0'
-s.source_files = 'CBScan'
+s.source_files = 'CBScan\CBScan\*.{h,m,png,mp3}'
 s.frameworks = 'AVFoundation'
 end
