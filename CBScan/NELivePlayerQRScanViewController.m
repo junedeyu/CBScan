@@ -7,7 +7,15 @@
 //
 
 #import "NELivePlayerQRScanViewController.h"
+#import <Masonry/Masonry.h>
 #import <AVFoundation/AVFoundation.h>
+
+#ifdef DEBUG
+#define CBLog(...) NSLog(__VA_ARGS__)
+#define CBMsg object[@"RetMessage"]
+#else
+#define CBLog(...)
+#endif
 
 @interface NELivePlayerQRScanViewController () <AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate>
 
@@ -198,12 +206,12 @@
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         _scanMask.transform = CGAffineTransformTranslate(_scanMask.transform, 0, _scanMask.frame.size.height);
+                         self.scanMask.transform = CGAffineTransformTranslate(self.scanMask.transform, 0, self.scanMask.frame.size.height);
                          self.scanMask.alpha = 1.0;
                      }
                      completion:^(BOOL finished) {
                         self.scanMask.alpha = 0.0;
-                         _scanMask.frame = CGRectMake(_scanMask.frame.origin.x, -(_scanMask.frame.size.height-_scanMask.frame.origin.y), _scanMask.frame.size.width, _scanMask.frame.size.height);
+                         self.scanMask.frame = CGRectMake(self.scanMask.frame.origin.x, -(self.scanMask.frame.size.height-self.scanMask.frame.origin.y), self.scanMask.frame.size.width, self.scanMask.frame.size.height);
                          // 在底部稍微停留一点时间，再继续
                          [UIView animateWithDuration:0.5 animations:^{
                          } completion:^(BOOL finished) {
