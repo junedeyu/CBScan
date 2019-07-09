@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = "CBScan"
-s.version = '1.0.2'
+s.version = '1.0.4'
 s.license = 'MIT'
 # Copyright (c2019) CBin. All rights reserved
 s.summary = "条码、二维码扫描，带提示音"

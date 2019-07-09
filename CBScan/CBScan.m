@@ -1,12 +1,12 @@
 //
-//  NELivePlayerQRScanViewController.m
-//  NELivePlayerDemo
+//  CBScan.m
+//  CBScanDemo
 //
-//  Created by NetEase on 16/10/10.
-//  Copyright © 2016年 netease. All rights reserved.
+//  Created by CBScan on 19/07/07.
+//  Copyright © 2016年 CBScan. All rights reserved.
 //
 
-#import "NELivePlayerQRScanViewController.h"
+#import "CBScan.h"
 #import <Masonry/Masonry.h>
 #import <AVFoundation/AVFoundation.h>
 
@@ -17,7 +17,7 @@
 #define CBLog(...)
 #endif
 
-@interface NELivePlayerQRScanViewController () <AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate>
+@interface CBScan () <AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) AVCaptureSession *session;
 @property (nonatomic,strong) AVCaptureDevice * captureDevice;
@@ -26,7 +26,7 @@
 @property (nonatomic, assign) BOOL isStop;
 @end
 
-@implementation NELivePlayerQRScanViewController {
+@implementation CBScan {
     CGSize  screenSize;
     CGFloat scanFrameW;
     CGFloat scanFrameH;
@@ -252,7 +252,7 @@
                 strValue = [strValue substringFromIndex:1];
         }
         //通知代理
-        if ([self.delegate respondsToSelector:@selector(NELivePlayerQRScanDidFinishScanner:)]) {
+        if ([self.delegate respondsToSelector:@selector(CBScanDidFinishScanner:)]) {
             if (viewControllers.count > 1) {
                 if ([viewControllers objectAtIndex:viewControllers.count-1] == self) {
                     [self.navigationController popViewControllerAnimated:YES];
@@ -272,7 +272,7 @@
             AudioServicesPlaySystemSound(soundID);
             
             
-            [self.delegate NELivePlayerQRScanDidFinishScanner:strValue];
+            [self.delegate CBScanDidFinishScanner:strValue];
             self.isStop = YES;
             if(self.captureDevice.torchMode == AVCaptureTorchModeOn) {
                 [self stopLight];

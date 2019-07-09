@@ -7,9 +7,9 @@
 //
 
 #import "ViewController.h"
-#import "NELivePlayerQRScanViewController.h"
+#import "CBScan.h"
 
-@interface ViewController ()<NELivePlayerQRScanViewControllerDelegate>
+@interface ViewController ()<CBScanDelegate>
 
 @end
 
@@ -20,13 +20,13 @@
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NELivePlayerQRScanViewController * scan = [[NELivePlayerQRScanViewController alloc] init];
+    CBScan * scan = [[CBScan alloc] init];
     scan.delegate = self;
     [self.navigationController pushViewController:scan animated:YES];
 }
 
 // 扫描成功后
-- (void)NELivePlayerQRScanDidFinishScanner:(NSString *)string {
+- (void)CBScanDidFinishScanner:(NSString *)string {
     NSLog(@"--- %@",string);
 }
 
