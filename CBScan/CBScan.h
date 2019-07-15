@@ -15,4 +15,7 @@
 
 @interface CBScan : UIViewController
 @property (nonatomic, weak) id<CBScanDelegate> delegate;
+
+@property (nonatomic,copy) void(^ CBScanSucBlock)(NSString * result);
+
 @end

@@ -251,32 +251,35 @@
             if ([strValue hasPrefix:@"0"] && [strValue length] > 1)
                 strValue = [strValue substringFromIndex:1];
         }
+        
+        if (viewControllers.count > 1) {
+            if ([viewControllers objectAtIndex:viewControllers.count-1] == self) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        
+        // 发出声音
+        NSURL * url = [[NSBundle mainBundle]URLForResource:@"scanSuccess.mp3" withExtension:nil];
+        //2.加载音效文件，创建音效ID（SoundID,一个ID对应一个音效文件）
+        SystemSoundID soundID = 8787;
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &soundID);
+        //3.播放音效文件
+        //下面的两个函数都可以用来播放音效文件，第一个函数伴随有震动效果
+        //            AudioServicesPlayAlertSound(soundID);
+        AudioServicesPlaySystemSound(soundID);
+        
         //通知代理
         if ([self.delegate respondsToSelector:@selector(CBScanDidFinishScanner:)]) {
-            if (viewControllers.count > 1) {
-                if ([viewControllers objectAtIndex:viewControllers.count-1] == self) {
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-            }else {
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
-            
-            // 发出声音
-            NSURL * url = [[NSBundle mainBundle]URLForResource:@"scanSuccess.mp3" withExtension:nil];
-            //2.加载音效文件，创建音效ID（SoundID,一个ID对应一个音效文件）
-            SystemSoundID soundID = 8787;
-            AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &soundID);
-            //3.播放音效文件
-            //下面的两个函数都可以用来播放音效文件，第一个函数伴随有震动效果
-//            AudioServicesPlayAlertSound(soundID);
-            AudioServicesPlaySystemSound(soundID);
-            
-            
             [self.delegate CBScanDidFinishScanner:strValue];
-            self.isStop = YES;
-            if(self.captureDevice.torchMode == AVCaptureTorchModeOn) {
-                [self stopLight];
-            }
+        }else{
+            self.CBScanSucBlock(strValue);
+        }
+        
+        self.isStop = YES;
+        if(self.captureDevice.torchMode == AVCaptureTorchModeOn) {
+            [self stopLight];
         }
     }
 }
