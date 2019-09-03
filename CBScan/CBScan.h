@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @protocol CBScanDelegate <NSObject>
+
+@optional;
 - (void)CBScanDidFinishScanner:(NSString *)string;
+
 @end
 
 

@@ -17,6 +17,8 @@
 #define CBLog(...)
 #endif
 
+#define IMAGE_Resource_PATH(NAME) [NSString stringWithFormat:@"%@",[[NSBundle mainBundle] pathForResource:NAME ofType:@"png"]]
+
 @interface CBScan () <AVCaptureMetadataOutputObjectsDelegate,UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) AVCaptureSession *session;
@@ -110,16 +112,17 @@
     CGFloat edgeLength = 17;
     //左上角
     UIImageView *topLeft = [[UIImageView alloc] initWithFrame:CGRectMake(scanFrame.origin.x, scanFrame.origin.y, edgeLength, edgeLength)];
-    topLeft.image = [UIImage imageNamed:@"app_scan_corner_top_left"];
+    
+    topLeft.image = [UIImage imageWithContentsOfFile:IMAGE_Resource_PATH(@"app_scan_corner_top_left")];
     //右上角
     UIImageView *topRight = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(scanFrame) - edgeLength, scanFrame.origin.y, edgeLength, edgeLength)];
-    topRight.image = [UIImage imageNamed:@"app_scan_corner_top_right"];
+    topRight.image = [UIImage imageWithContentsOfFile:IMAGE_Resource_PATH(@"app_scan_corner_top_right")];
     //左下角
     UIImageView *bottomLeft = [[UIImageView alloc] initWithFrame:CGRectMake(scanFrame.origin.x, CGRectGetMaxY(scanFrame) - edgeLength, edgeLength, edgeLength)];
-    bottomLeft.image = [UIImage imageNamed:@"app_scan_corner_bottom_left"];
+    bottomLeft.image = [UIImage imageWithContentsOfFile:IMAGE_Resource_PATH(@"app_scan_corner_bottom_left")];
     //右下角
     UIImageView *bottomRight = [[UIImageView alloc] initWithFrame:CGRectMake(topRight.frame.origin.x, bottomLeft.frame.origin.y, edgeLength, edgeLength)];
-    bottomRight.image = [UIImage imageNamed:@"app_scan_corner_bottom_right"];
+    bottomRight.image = [UIImage imageWithContentsOfFile:IMAGE_Resource_PATH(@"app_scan_corner_bottom_right")];
     
     [self.view addSubview:topLeft];
     [self.view addSubview:topRight];
@@ -130,7 +133,7 @@
     CGFloat scanMaskWidth = scanFrameW;
     CGFloat scanMaskHeight = scanFrameW;
     UIImageView *scanMask = [[UIImageView alloc] initWithFrame:CGRectMake((screenSize.width - scanMaskWidth) / 2, scanFrame.origin.y, scanMaskWidth, scanMaskHeight)];
-    scanMask.image = [UIImage imageNamed:@"scan_net"];
+    scanMask.image = [UIImage imageWithContentsOfFile:IMAGE_Resource_PATH(@"scan_net")];
     self.scanMask = scanMask;
     [self.view addSubview:scanMask];
     
@@ -145,7 +148,7 @@
     CGFloat backImageViewY = 30;
     UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
     back.frame = CGRectMake(scanFrame.origin.x/2, backImageViewY, backImageViewWidth, backImageViewWidth);
-    [back setImage:[UIImage imageNamed:@"btn_player_quit"] forState:UIControlStateNormal];
+    [back setImage:[UIImage imageWithContentsOfFile:IMAGE_Resource_PATH(@"btn_player_quit")] forState:UIControlStateNormal];
     [back addTarget:self action:@selector(onClickback) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:back];
     
@@ -158,8 +161,8 @@
         make.bottom.equalTo(self.view.mas_bottom).offset(-30);
         make.height.width.equalTo(@50);
     }];
-    [lightBtn setImage:[UIImage imageNamed:@"lightDef"] forState:UIControlStateNormal];
-    [lightBtn setImage:[UIImage imageNamed:@"lightSelect"] forState:UIControlStateSelected];
+    [lightBtn setImage:[UIImage imageWithContentsOfFile:IMAGE_Resource_PATH(@"lightDef")] forState:UIControlStateNormal];
+    [lightBtn setImage:[UIImage imageWithContentsOfFile:IMAGE_Resource_PATH(@"lightSelect")] forState:UIControlStateSelected];
     [lightBtn addTarget:self action:@selector(lightAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -261,7 +264,7 @@
         }
         
         // 发出声音
-        NSURL * url = [[NSBundle mainBundle]URLForResource:@"scanSuccess.mp3" withExtension:nil];
+        NSURL * url = [[NSBundle mainBundle] URLForResource:@"scanSuccess.mp3" withExtension:nil];
         //2.加载音效文件，创建音效ID（SoundID,一个ID对应一个音效文件）
         SystemSoundID soundID = 8787;
         AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &soundID);
