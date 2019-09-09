@@ -264,7 +264,7 @@
         }
         
         // 发出声音
-        NSURL * url = [[NSBundle mainBundle] URLForResource:@"scanSuccess.mp3" withExtension:nil];
+        NSURL * url = [[NSBundle mainBundle] URLForResource:@"CBScan.bundle/scanSuccess.mp3" withExtension:nil];
         //2.加载音效文件，创建音效ID（SoundID,一个ID对应一个音效文件）
         SystemSoundID soundID = 8787;
         AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &soundID);

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = "CBScan"
-s.version = '1.0.9'
+s.version = '1.1.0'
 s.license = 'MIT'
 # Copyright (c2019) CBin. All rights reserved
 s.summary = "条码、二维码扫描，带提示音"
@@ -10,7 +10,7 @@ s.source = { :git => "https://github.com/junedeyu/CBScan.git", :tag => s.version
 s.requires_arc = true
 s.platform = :ios, '9.0'
 s.ios.deployment_target = '9.0'
-s.resources    = "CBScan/CBScan/*.{png,mp3,bundle}"
+s.resources    = "CBScan/Resources/*.{bundle}"
 s.source_files = 'CBScan/*.{*}'
 s.frameworks = 'AVFoundation'
 s.dependency 'Masonry'
