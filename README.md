@@ -25,6 +25,8 @@
 CBScan * scan = [[CBScan alloc] init];
 scan.delegate = self;
 [self.navigationController pushViewController:scan animated:YES];
+// 或者使用block扫码回调方式
+
 }
 
 // 扫描成功后
