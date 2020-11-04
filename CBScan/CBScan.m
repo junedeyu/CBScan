@@ -108,21 +108,28 @@
     [self.view addSubview:rightView];
     [self.view addSubview:bottomView];
     
+    NSBundle *bundle = [NSBundle bundleForClass:[CBScan class]];
+    NSURL *url = [bundle URLForResource:@"CBScan" withExtension:@"bundle"];
+    NSBundle *imageBundle = [NSBundle bundleWithURL:url];
+    
     //取景框
     CGFloat edgeLength = 17;
     //左上角
     UIImageView *topLeft = [[UIImageView alloc] initWithFrame:CGRectMake(scanFrame.origin.x, scanFrame.origin.y, edgeLength, edgeLength)];
     
-    topLeft.image =  [UIImage imageNamed:@"CBScan.bundle/app_scan_corner_top_left"];
+    topLeft.image =  [UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"app_scan_corner_top_left@2x" ofType:@"png"]];
+    
     //右上角
     UIImageView *topRight = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(scanFrame) - edgeLength, scanFrame.origin.y, edgeLength, edgeLength)];
-    topRight.image = [UIImage imageNamed:@"CBScan.bundle/app_scan_corner_top_right"];
+    topRight.image = [UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"app_scan_corner_top_right@2x" ofType:@"png"]];
+    
     //左下角
     UIImageView *bottomLeft = [[UIImageView alloc] initWithFrame:CGRectMake(scanFrame.origin.x, CGRectGetMaxY(scanFrame) - edgeLength, edgeLength, edgeLength)];
-    bottomLeft.image = [UIImage imageNamed:@"CBScan.bundle/app_scan_corner_bottom_left"];
+    bottomLeft.image = [UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"app_scan_corner_bottom_left@2x" ofType:@"png"]];
+
     //右下角
     UIImageView *bottomRight = [[UIImageView alloc] initWithFrame:CGRectMake(topRight.frame.origin.x, bottomLeft.frame.origin.y, edgeLength, edgeLength)];
-    bottomRight.image = [UIImage imageNamed:@"CBScan.bundle/app_scan_corner_bottom_right"];
+    bottomRight.image = [UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"app_scan_corner_bottom_right@2x" ofType:@"png"]];
     
     [self.view addSubview:topLeft];
     [self.view addSubview:topRight];
@@ -133,7 +140,8 @@
     CGFloat scanMaskWidth = scanFrameW;
     CGFloat scanMaskHeight = scanFrameW;
     UIImageView *scanMask = [[UIImageView alloc] initWithFrame:CGRectMake((screenSize.width - scanMaskWidth) / 2, scanFrame.origin.y, scanMaskWidth, scanMaskHeight)];
-    scanMask.image = [UIImage imageNamed:@"CBScan.bundle/scan_net"];
+    scanMask.image = [UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"scan_net@2x" ofType:@"png"]];
+    
     self.scanMask = scanMask;
     [self.view addSubview:scanMask];
     
@@ -148,7 +156,7 @@
     CGFloat backImageViewY = 30;
     UIButton *back = [UIButton buttonWithType:UIButtonTypeCustom];
     back.frame = CGRectMake(scanFrame.origin.x/2, backImageViewY, backImageViewWidth, backImageViewWidth);
-    [back setImage:[UIImage imageNamed:@"CBScan.bundle/btn_player_quit"] forState:UIControlStateNormal];
+    [back setImage:[UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"btn_player_quit@2x" ofType:@"png"]] forState:UIControlStateNormal];
     [back addTarget:self action:@selector(onClickback) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:back];
     
@@ -161,8 +169,9 @@
         make.bottom.equalTo(self.view.mas_bottom).offset(-30);
         make.height.width.equalTo(@50);
     }];
-    [lightBtn setImage:[UIImage imageNamed:@"CBScan.bundle/lightDef"] forState:UIControlStateNormal];
-    [lightBtn setImage:[UIImage imageNamed:@"CBScan.bundle/lightSelect"] forState:UIControlStateSelected];
+    
+    [lightBtn setImage:[UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"lightDef@2x" ofType:@"png"]] forState:UIControlStateNormal];
+    [lightBtn setImage:[UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"lightSelect@2x" ofType:@"png"]] forState:UIControlStateSelected];
     [lightBtn addTarget:self action:@selector(lightAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -262,9 +271,13 @@
         }else {
             [self dismissViewControllerAnimated:YES completion:nil];
         }
+        NSBundle *bundle = [NSBundle bundleForClass:[CBScan class]];
+        NSURL *mainUrl = [bundle URLForResource:@"CBScan" withExtension:@"bundle"];
+        NSBundle *imageBundle = [NSBundle bundleWithURL:mainUrl];
         
         // 发出声音
-        NSURL * url = [[NSBundle mainBundle] URLForResource:@"CBScan.bundle/scanSuccess.mp3" withExtension:nil];
+//        [UIImage imageWithContentsOfFile:[imageBundle pathForResource:@"scanSuccess" ofType:@"mp3"]]
+        NSURL * url = [NSURL fileURLWithPath:[imageBundle pathForResource:@"scanSuccess" ofType:@"mp3"]];
         //2.加载音效文件，创建音效ID（SoundID,一个ID对应一个音效文件）
         SystemSoundID soundID = 8787;
         AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &soundID);
